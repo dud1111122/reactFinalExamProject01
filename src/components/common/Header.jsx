@@ -1,17 +1,20 @@
+import { Link } from 'react-router-dom';
 import React from 'react';
 import InputField from '../ui/InputField';
 
 const Header = () => {
   return (
-    <header className="w-full h-[105px] bg-white py-1 px-6 border-b border-gray-400 ">
+    <header className="w-full  h-[105px] bg-white py-1 px-6 border-b border-gray-400 ">
       <div className="flex items-center justify-center max-w-[1920px] mx-auto ">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <img
-            src="/images/img_12teamlogovectorized_1.svg"
-            alt="12Team Logo"
-            className="w-[90px] h-[90px]"
-          />
+          <Link to="/">
+            <img
+              src="/images/img_12teamlogovectorized_1.svg"
+              alt="12Team Logo"
+              className="w-[90px] h-[90px]"
+            />
+          </Link>
         </div>
 
         {/* Search Bar */}
@@ -24,12 +27,12 @@ const Header = () => {
 
         {/* Navigation Links */}
         <nav className="flex items-center space-x-6 translate-y-2">
-          <a
-            href="#"
+          <Link
+            to="/register"
             className="text-[20px] font-inter font-normal leading-[25px] text-black hover:text-gray-600 transition-colors"
           >
             로그인/회원가입
-          </a>
+          </Link>
           <a
             href="#"
             className="text-[20px] font-inter font-normal leading-[25px] text-black hover:text-gray-600 transition-colors"
