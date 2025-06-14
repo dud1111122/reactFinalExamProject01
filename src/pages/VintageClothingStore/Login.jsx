@@ -14,11 +14,16 @@ const Login = () => {
       <div className="w-full min-h-screen flex justify-center ">
         <div className="w-full max-w-[550px] px-6 py-10 bg-white rounded-lg">
           {/* 로고 */}
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center flex-col items-center mb-4 overflow-hidden">
             <img
               src="/images/img_12teamlogovectorized_1.svg"
               alt="12Team Logo"
               className="w-[90px] h-[90px]"
+            />
+            <img
+              src="/images/React_Project_12Team_Page_img.svg"
+              alt="12Team Logo"
+              className="w-[190px] h-[90px] object-cover mt-[-16px]"
             />
           </div>
 
