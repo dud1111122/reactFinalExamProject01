@@ -1,0 +1,161 @@
+.transaction-container {
+  max-width: 600px;
+  margin: 40px auto 80px; 
+  font-family: Arial, sans-serif;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.product-image {
+  width: 80px;
+  height: 80px;
+  background-color: #ccc;
+  margin-right: 20px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.product-name {
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.product-price {
+  font-size: 18px;
+}
+
+.method-select {
+  margin-bottom: 30px;
+}
+
+.method-label {
+  font-size: 16px;
+  margin-bottom: 12px;
+  display: block;
+  font-weight: 600;
+}
+
+/* 입력 필드 공통 스타일 */
+.form-input,
+.form-textarea,
+.form-datetime,
+.form-price {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #999; /* 얇은 테두리 */
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  outline-offset: 2px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-datetime:focus,
+.form-price:focus {
+  border-color: #555;
+  box-shadow: 0 0 6px #666;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.price-unit {
+  margin-left: 8px;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.button-group {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  background-color: #666;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  border-radius: 12px 12px 0 0;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.btn {
+  padding: 10px 28px;
+  border-radius: 8px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background-color: #bbb;
+}
+
+.next-btn {
+  background-color: #aaa;
+  color: white;
+}
+
+.next-btn:hover {
+  background-color: #888;
+}
+
+/* 반응형 */
+@media (max-width: 480px) {
+  .transaction-container {
+    max-width: 100%;
+    margin: 20px 10px 80px;
+  }
+
+  .product-name {
+    font-size: 18px;
+  }
+
+  .product-price,
+  .method-label,
+  .form-input,
+  .form-textarea,
+  .btn {
+    font-size: 14px;
+  }
+
+  .product-image {
+    width: 60px;
+    height: 60px;
+    margin-right: 12px;
+  }
+
+  .button-group {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .btn {
+    padding: 8px 20px;
+  }
+}

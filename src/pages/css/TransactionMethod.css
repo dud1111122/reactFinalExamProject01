@@ -1,0 +1,156 @@
+.transaction-container {
+  max-width: 600px;
+  margin: 40px auto 80px; /* 하단바 공간 확보 위해 아래 여백 추가 */
+  font-family: Arial, sans-serif;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.product-image {
+  width: 80px;
+  height: 80px;
+  background-color: #ccc;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.product-name {
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.product-price {
+  font-size: 18px;
+}
+
+.method-select {
+  margin-bottom: 30px;
+}
+
+.method-label {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.method-fieldset {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 14px 20px;
+  font-size: 16px;
+}
+
+.method-label-item {
+  display: block;
+  margin-bottom: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.method-label-item input[type="radio"] {
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.direct-trade-fieldset {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 14px 20px;
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+.direct-trade-fieldset legend {
+  padding: 0 8px;
+  font-size: 16px;
+}
+
+.direct-trade-desc {
+  color: #999;
+  padding: 8px 0;
+}
+
+.button-group {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  background-color: #666;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  border-radius: 12px 12px 0 0;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.btn {
+  padding: 10px 28px;
+  border-radius: 8px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background-color: #bbb;
+}
+
+.next-btn {
+  background-color: #aaa;
+  color: white;
+}
+
+.next-btn:hover {
+  background-color: #888;
+}
+
+/* 반응형 */
+@media (max-width: 480px) {
+  .transaction-container {
+    max-width: 100%;
+    margin: 20px 10px 80px; /* 하단바 공간 확보 */
+  }
+
+  .product-name {
+    font-size: 18px;
+  }
+
+  .product-price,
+  .method-label,
+  .method-fieldset,
+  .direct-trade-fieldset,
+  .btn {
+    font-size: 14px;
+  }
+
+  .product-image {
+    width: 60px;
+    height: 60px;
+    margin-right: 12px;
+  }
+
+  .button-group {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .btn {
+    padding: 8px 20px;
+  }
+}
