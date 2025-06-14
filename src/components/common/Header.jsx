@@ -28,7 +28,7 @@ const Header = () => {
         {/* Navigation Links */}
         <nav className="flex items-center space-x-6 translate-y-2">
           <Link
-            to="/register"
+            to="/login"
             className="text-[20px] font-inter font-normal leading-[25px] text-black hover:text-gray-600 transition-colors"
           >
             로그인/회원가입
@@ -39,12 +39,12 @@ const Header = () => {
           >
             상품등록
           </a>
-          <a
-            href="#"
+          <Link
+            to="/mypage"
             className="text-[20px] font-inter font-normal leading-[25px] text-black hover:text-gray-600 transition-colors"
           >
             마이페이지
-          </a>
+          </Link>
         </nav>
       </div>
     </header>
