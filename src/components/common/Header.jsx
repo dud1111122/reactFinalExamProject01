@@ -1,10 +1,24 @@
-import { Link } from 'react-router-dom';
-import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import InputField from '../ui/InputField';
 
 const Header = () => {
-  const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
-  console.log("🔐 로그인 상태:", isLoggedIn);
+  const navigate = useNavigate();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    sessionStorage.getItem("isLoggedIn") === "true"
+  );
+
+  // 로그인 상태 변경 시 로그 찍기
+  useEffect(() => {
+    console.log("🔐 로그인 상태:", isLoggedIn);
+  }, [isLoggedIn]);
+
+  const handleLogout = () => {
+    sessionStorage.setItem("isLoggedIn", "false");
+    setIsLoggedIn(false);
+    navigate("/"); // 로그아웃 후 메인 페이지로 이동
+  };
 
   return (
     <header className="w-full h-[105px] bg-white py-1 px-6 border-b border-gray-400">
@@ -30,20 +44,33 @@ const Header = () => {
 
         {/* Navigation Links */}
         <nav className="flex items-center space-x-6 translate-y-2">
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="text-[20px] font-inter font-normal leading-[25px] text-black hover:text-gray-600 transition-colors"
+            >
+              로그아웃
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="text-[20px] font-inter font-normal leading-[25px] text-black hover:text-gray-600 transition-colors"
+            >
+              로그인/회원가입
+            </Link>
+          )}
+
+
           <Link
-            to="/login"
-            className="text-[20px] font-inter font-normal leading-[25px] text-black hover:text-gray-600 transition-colors"
-          >
-            로그인/회원가입
-          </Link>
-          <Link
-            to="/add-product"
+            to={isLoggedIn ? "/add-product" : "/login"}
             className="text-[20px] font-inter font-normal leading-[25px] text-black hover:text-gray-600 transition-colors"
           >
             상품등록
           </Link>
+
+
           <Link
-            to={isLoggedIn ? "/myhome" : "/login"}
+            to={isLoggedIn ? "/mypage" : "/login"}
             className="text-[20px] font-inter font-normal leading-[25px] text-black hover:text-gray-600 transition-colors"
           >
             마이페이지

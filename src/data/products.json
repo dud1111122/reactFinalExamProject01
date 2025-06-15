@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "title": "상품제목1",
+    "description": "상품설명1",
+    "price": "10,000원",
+    "image": "/images/products/product01.png"
+  },
+  {
+    "id": 2,
+    "title": "상품제목2",
+    "description": "상품설명2",
+    "price": "12,000원",
+    "image": "/images/products/product02.png"
+  },
+  {
+    "id": 3,
+    "title": "상품제목3",
+    "description": "상품설명3",
+    "price": "8,000원",
+    "image": "/images/products/product03.png"
+  },
+  {
+    "id": 4,
+    "title": "상품제목4",
+    "description": "상품설명4",
+    "price": "5,000원",
+    "image": "/images/products/product04.png"
+  }
+]

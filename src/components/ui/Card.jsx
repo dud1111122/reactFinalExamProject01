@@ -9,6 +9,9 @@ const Card = ({
   className = '',
   ...props 
 }) => {
+  console.log("📷 이미지 경로:", image);
+
+
   return (
     <div 
       className={`bg-white border border-black cursor-pointer hover:shadow-lg transition-shadow duration-200 ${className}`}

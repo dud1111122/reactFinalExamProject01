@@ -1,13 +1,24 @@
 import React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/common/Header';
+import MyProducts from './MyhomeFollowers/MyProducts';
 
 const Myhome = ({ products }) => {
   const navigate = useNavigate();
 
-  const handleClick = (product) => {
-    navigate(`/edit-product/${product.id}`);
-  };
+  const user = JSON.parse(localStorage.getItem("registeredUser"));
+  const nickname = user?.nickname || "닉네임 없음"; // 값이 없으면 기본 표시
+
+  const [selectedPanel, setSelectedPanel] = useState(1); // 누른 네모 상태
+
+  const panels = [
+  { id: 1, label: "내 상품" },
+  { id: 2, label: "구매 내역" },
+  { id: 3, label: "판매 내역" },
+  { id: 4, label: "찜" },
+];
+
 
   return (
     <>
@@ -15,7 +26,7 @@ const Myhome = ({ products }) => {
         <Header />
       </div>
 
-      <div className="w-full min-h-screen flex justify-start items-center flex-col py-10">
+      <div className="w-full min-h-screen flex justify-start items-center flex-col py-10 ">
         {/* 프로필 영역 */}
         <div className="flex justify-end flex-col items-start w-full max-w-[1200px] h-[250px] p-4 pt-10 mb-7 border border-gray-300 rounded-md bg-white">
           <img
@@ -23,32 +34,30 @@ const Myhome = ({ products }) => {
             alt="설명"
             className="w-[100px] h-[100px] object-cover rounded-full mb-3"
           />
-          <h3 className="text-lg font-bold mb-1">닉네임</h3>
+          <h3 className="text-lg font-bold mb-1">{nickname}</h3>
           <p className="text-sm text-gray-600">나의 설명</p>
         </div>
 
-        {/* 등록된 상품 리스트 */}
-        <div className="flex flex-wrap gap-4 w-full max-w-[1200px] p-4 border border-gray-300 rounded-md bg-white">
-          {products.length === 0 ? (
-            <p className="text-gray-500">등록된 상품이 없습니다.</p>
-          ) : (
-            products.map((product) => (
+        <div className="flex flex-col w-full max-w-[1200px] border border-gray-300 rounded-md bg-white overflow-hidden">
+        <div className="flex w-full max-w-[1200px] border border-gray-300 rounded-md bg-white overflow-hidden">
+            {panels.map((panel) => (
               <div
-                key={product.id}
-                onClick={() => handleClick(product)}
-                className="border p-4 rounded-md w-[200px] shadow-sm hover:shadow-md cursor-pointer"
+                key={panel.id}
+                onClick={() => setSelectedPanel(panel.id)}
+                className="flex-1 basis-1/4 h-[100px] bg-gray-100 border-r border-gray-300 flex justify-center items-center cursor-pointer hover:bg-gray-200 transition"
               >
-                <div className="font-semibold text-lg mb-2">{product.name}</div>
-                <div className="text-sm text-gray-600 mb-1">
-                  {product.description || '설명이 없습니다.'}
-                </div>
-                <div className="text-sm text-gray-500 mb-1">
-                  마감시간: {product.deadline ? new Date(product.deadline).toLocaleString() : '-'}
-                </div>
-                <div className="text-base font-bold">{product.price ? `${product.price} 원` : '-'}</div>
+                {panel.label}
               </div>
-            ))
-          )}
+            ))}
+        </div>
+
+        {/* 선택된 컴포넌트 보여주기 */}
+        <div className="w-full max-w-[1200px] p-3">
+          {selectedPanel === 1 && <MyProducts products={products}/>}
+          {selectedPanel === 2 && <Panel2 />}
+          {selectedPanel === 3 && <Panel3 />}
+          {selectedPanel === 4 && <Panel4 />}
+        </div>
         </div>
       </div>
     </>

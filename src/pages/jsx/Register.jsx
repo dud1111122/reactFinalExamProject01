@@ -60,7 +60,6 @@ const Register = () => {
     // 백엔드 연동이 있다면 fetch/axios 요청
     // console.log("회원가입 정보:", form);
     localStorage.setItem("registeredUser", JSON.stringify(form));
-    sessionStorage.setItem("isLoggedIn", "true");
     alert("회원가입이 완료 되었습니다.");
     navigate("/login")
   };
