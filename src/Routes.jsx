@@ -20,7 +20,7 @@ const AppRoutes = ({ products, addProduct, deleteProduct, updateProduct }) => {
         <Route path="/register" element={<Register />} />
         <Route path="/mypage" element={<Myhome products={products} />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/product/:id" element={<ProductDetail products={products} />} />
         <Route path="/transaction" element={<TransactionMethod />} />
         <Route path="/order" element={<OrderPage />} />
         <Route path="/add-product" element={<AddProduct addProduct={addProduct} />} />

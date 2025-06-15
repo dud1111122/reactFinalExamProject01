@@ -38,31 +38,65 @@ const Register = () => {
     }));
   };
   
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    // 유효성 검사
-    if (!form.email || !form.password || !form.passwordCheck || !form.nickname) {
-      alert("모든 필드를 입력해주세요.");
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // 유효성 검사
+  if (!form.email || !form.password || !form.passwordCheck || !form.nickname) {
+    alert("모든 필드를 입력해주세요.");
+    return;
+  }
+
+  if (form.password !== form.passwordCheck) {
+    alert("비밀번호가 일치하지 않습니다.");
+    return;
+  }
+
+  if (!form.ageAgree || !form.termsAgree || !form.privacyAgree) {
+    alert("필수 약관에 동의해주세요.");
+    return;
+  }
+
+  try {
+    // 이메일 중복 확인
+    const res = await fetch(`http://localhost:4000/users?email=${form.email}`);
+    const existingUsers = await res.json();
+    if (existingUsers.length > 0) {
+      alert("이미 존재하는 이메일입니다.");
       return;
     }
 
-    if (form.password !== form.passwordCheck) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
-    }
+    // 저장할 유저 데이터 구성
+    const newUser = {
+      email: form.email,
+      password: form.password,
+      nickname: form.nickname,
+      sales: [],
+      purchases: [],
+      likes: []
+    };
 
-    if (!form.ageAgree || !form.termsAgree || !form.privacyAgree) {
-      alert("필수 약관에 동의해주세요.");
-      return;
-    }
+    // json-server에 POST 요청으로 저장
+    await fetch("http://localhost:4000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newUser)
+    });
 
-    // 백엔드 연동이 있다면 fetch/axios 요청
-    // console.log("회원가입 정보:", form);
-    localStorage.setItem("registeredUser", JSON.stringify(form));
-    alert("회원가입이 완료 되었습니다.");
-    navigate("/login")
-  };
+    alert("회원가입이 완료되었습니다!");
+    navigate("/login");
+  } catch (err) {
+    console.error("회원가입 중 오류 발생:", err);
+    alert("회원가입 중 오류가 발생했습니다.");
+  }
+};
+
+
+
 
   return (
     <>

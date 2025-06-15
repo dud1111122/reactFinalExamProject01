@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import products from '../../data/products.json';
 
 import Header from '../../components/common/Header';
 import HeroSection from '../../components/common/HeroSection';
 import Card from '../../components/ui/Card';
+import { ProductContext } from '../../contexts/ProductContext';
 
 const VintageClothingStore = () => {
   const navigate = useNavigate();
+  const { products } = useContext(ProductContext);
 
   const handleProductClick = (productId) => {
     navigate(`/product/${productId}`); // 상세 페이지로 이동

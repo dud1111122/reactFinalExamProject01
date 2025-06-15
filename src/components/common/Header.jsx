@@ -17,6 +17,7 @@ const Header = () => {
   const handleLogout = () => {
     sessionStorage.setItem("isLoggedIn", "false");
     setIsLoggedIn(false);
+    alert("로그아웃 되었습니다.");
     navigate("/"); // 로그아웃 후 메인 페이지로 이동
   };
 

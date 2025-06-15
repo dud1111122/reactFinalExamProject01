@@ -1,18 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { ProductContext } from "../../contexts/ProductContext";
 
 function ProductDetail() {
   const { id } = useParams();
-  const [views, setViews] = useState(0);
   const navigate = useNavigate();
+  const [views, setViews] = useState(0);
+
+  const { products } = useContext(ProductContext);
+  const product = products.find((p) => p.id === parseInt(id));
 
   useEffect(() => {
     setViews((prev) => prev + 1);
   }, []);
 
-  const handleBuyClick = () => {
-    navigate("/transaction");
-  };
+  if (!product) {
+    return (
+      <div style={{ padding: 40, textAlign: "center", fontSize: 18 }}>
+        ❌ 해당 상품을 찾을 수 없습니다.
+      </div>
+    );
+  }
 
   return (
     <div style={{ maxWidth: 600, margin: "40px auto", fontFamily: "Arial, sans-serif" }}>
@@ -29,16 +37,26 @@ function ProductDetail() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            color: "#999",
+            overflow: "hidden",
           }}
         >
-          이미지 없음
+          {product.image ? (
+            <img
+              src={product.image}
+              alt={product.title}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          ) : (
+            <div style={{ color: "#999" }}>이미지 없음</div>
+          )}
         </div>
+
         <div style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: 24, fontWeight: "bold" }}>상품명 (id: {id})</div>
-          <div style={{ fontSize: 20, marginTop: 8 }}>가격: 123,456원</div>
+          <div style={{ fontSize: 24, fontWeight: "bold" }}>{product.title}</div>
+          <div style={{ fontSize: 20, marginTop: 8 }}>가격: {product.price}</div>
           <div style={{ color: "#666", marginTop: 4 }}>조회수: {views}</div>
         </div>
+
         <div style={{ display: "flex", gap: 12 }}>
           <button
             style={{
@@ -50,7 +68,7 @@ function ProductDetail() {
               cursor: "pointer",
               fontSize: 16,
             }}
-            onClick={() => navigate("/chat")}  // 이 부분만 변경
+            onClick={() => navigate("/chat")}
           >
             채팅하기
           </button>
@@ -65,14 +83,15 @@ function ProductDetail() {
               cursor: "pointer",
               fontSize: 16,
             }}
-            onClick={handleBuyClick}
+            onClick={() => navigate("/transaction")}
           >
             구매하기
           </button>
         </div>
+
         <section style={{ marginTop: 40 }}>
           <h3>상품 설명</h3>
-          <p>상품에 대하여 상세 설명을 적어주세요.</p>
+          <p>{product.description || "상품에 대하여 상세 설명을 적어주세요."}</p>
         </section>
       </main>
     </div>

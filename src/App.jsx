@@ -1,30 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { ProductProvider } from './contexts/ProductContext';
+import { UserProvider } from './contexts/UserContext'; // ✅ 추가
 import AppRoutes from './Routes';
 
 function App() {
-  const [products, setProducts] = useState([]);
-
-  const addProduct = (newProduct) => {
-    setProducts((prev) => [...prev, newProduct]);
-  };
-
-  const deleteProduct = (id) => {
-    setProducts((prev) => prev.filter((p) => p.id !== id));
-  };
-
-  const updateProduct = (updatedProduct) => {
-    setProducts((prev) =>
-      prev.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
-    );
-  };
-
   return (
-    <AppRoutes
-      products={products}
-      addProduct={addProduct}
-      deleteProduct={deleteProduct}
-      updateProduct={updateProduct}
-    />
+    <UserProvider> {/* ✅ 사용자 컨텍스트 추가 */}
+      <ProductProvider>
+        <AppRoutes />
+      </ProductProvider>
+    </UserProvider>
   );
 }
 
