@@ -25,7 +25,7 @@ const Login = () => {
     if (success) {
       sessionStorage.setItem("isLoggedIn", "true"); // 선택적 저장
       alert("로그인 성공!");
-      navigate("/myhome"); // 원하는 경로로 이동
+      navigate("/"); // 원하는 경로로 이동
     } else {
       alert("아이디 또는 비밀번호가 올바르지 않습니다.");
     }
@@ -54,7 +54,7 @@ const Login = () => {
 
           <form onSubmit={handleSubmit} className="flex flex-col w-full">
             <div className="mb-4">
-              <label className="block mb-1 font-medium">아이디</label>
+              <label className="block mb-1 font-medium">이메일</label>
               <input
                 name="email"
                 value={input.email}

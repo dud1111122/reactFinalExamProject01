@@ -1,3 +1,4 @@
+// src/contexts/ProductContext.js
 import React, { createContext, useEffect, useState } from 'react';
 
 export const ProductContext = createContext();
@@ -5,7 +6,6 @@ export const ProductContext = createContext();
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
 
-  // 🔹 1. 전체 상품 가져오기
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -19,7 +19,6 @@ export const ProductProvider = ({ children }) => {
     fetchProducts();
   }, []);
 
-  // 🔹 2. 상품 추가
   const addProduct = async (newProduct) => {
     try {
       const res = await fetch('http://localhost:4000/products', {
@@ -34,7 +33,6 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
-  // 🔹 3. 상품 삭제
   const deleteProduct = async (id) => {
     try {
       await fetch(`http://localhost:4000/products/${id}`, {
@@ -46,7 +44,6 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
-  // 🔹 4. 상품 수정
   const updateProduct = async (updatedProduct) => {
     try {
       await fetch(`http://localhost:4000/products/${updatedProduct.id}`, {
@@ -62,9 +59,18 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  // 🔹 상품 likedBy만 갱신 (찜 처리 반영용)
+  const patchProductLikedBy = (id, likedBy) => {
+    setProducts((prev) =>
+      prev.map((p) =>
+        String(p.id) === String(id) ? { ...p, likedBy } : p
+      )
+    );
+  };
+
   return (
     <ProductContext.Provider
-      value={{ products, addProduct, deleteProduct, updateProduct }}
+      value={{ products, addProduct, deleteProduct, updateProduct, patchProductLikedBy }}
     >
       {children}
     </ProductContext.Provider>

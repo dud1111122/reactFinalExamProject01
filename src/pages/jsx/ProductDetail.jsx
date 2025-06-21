@@ -1,19 +1,65 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ProductContext } from "../../contexts/ProductContext";
+import { ProductContext } from "@/contexts/ProductContext";
+import { UserContext } from "@/contexts/UserContext";
 import Header from "@/components/common/Header";
 
 function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [views, setViews] = useState(0);
+  const [liked, setLiked] = useState(false);
 
-  const { products } = useContext(ProductContext);
+  const { products, patchProductLikedBy } = useContext(ProductContext);
+  const { user, loadUser } = useContext(UserContext);
+
   const product = products.find((p) => String(p.id) === String(id));
 
   useEffect(() => {
     setViews((prev) => prev + 1);
   }, []);
+
+  useEffect(() => {
+    if (user && product) {
+      setLiked(product.likedBy.includes(user.id));
+    }
+  }, [user, product]);
+
+  const handleLike = async () => {
+    if (!user || !product) return;
+
+    const isAlreadyLiked = product.likedBy.includes(user.id);
+    let updatedLikedBy = isAlreadyLiked
+      ? product.likedBy.filter((uid) => uid !== user.id)
+      : [...product.likedBy, user.id];
+
+    let updatedLikes = isAlreadyLiked
+      ? user.likes.filter((pid) => String(pid) !== String(product.id))
+      : [...user.likes, product.id];
+
+    try {
+      // 서버에 반영
+      await fetch(`http://localhost:4000/products/${product.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ likedBy: updatedLikedBy }),
+      });
+
+      await fetch(`http://localhost:4000/users/${user.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ likes: updatedLikes }),
+      });
+
+      // context 상태 갱신
+      patchProductLikedBy(product.id, updatedLikedBy);
+      await loadUser(user.id); // 유저 상태 새로고침
+
+      setLiked(!isAlreadyLiked);
+    } catch (err) {
+      console.error("찜 처리 중 오류:", err);
+    }
+  };
 
   if (!product) {
     return (
@@ -21,9 +67,7 @@ function ProductDetail() {
         <div className="sticky top-0 z-50 bg-white">
           <Header />
         </div>
-        <div className="p-10 text-center text-lg">
-          ❌ 해당 상품을 찾을 수 없습니다.
-        </div>
+        <div className="p-10 text-center text-lg">❌ 해당 상품을 찾을 수 없습니다.</div>
       </>
     );
   }
@@ -40,7 +84,6 @@ function ProductDetail() {
         </header>
 
         <main>
-          {/* 이미지 영역 */}
           <div className="w-full h-full bg-gray-200 mb-5 flex items-center justify-center overflow-hidden rounded-md">
             {product.image ? (
               <img
@@ -53,14 +96,12 @@ function ProductDetail() {
             )}
           </div>
 
-          {/* 상품 정보 */}
           <div className="mb-6">
             <div className="text-xl font-bold">{product.title}</div>
             <div className="text-lg mt-2">가격: {product.price}</div>
             <div className="text-sm text-gray-500 mt-1">조회수: {views}</div>
           </div>
 
-          {/* 버튼 영역 */}
           <div className="flex gap-3 mb-8">
             <button
               className="flex-1 py-3 bg-gray-300 rounded-lg text-base hover:bg-gray-400 transition"
@@ -74,9 +115,16 @@ function ProductDetail() {
             >
               구매하기
             </button>
+            <button
+              className={`flex-1 py-3 rounded-lg text-base transition ${
+                liked ? "bg-red-500 text-white" : "bg-gray-300 text-black"
+              }`}
+              onClick={handleLike}
+            >
+              {liked ? "찜 취소" : "찜하기 ❤️"}
+            </button>
           </div>
 
-          {/* 설명 영역 */}
           <section>
             <h3 className="text-lg font-semibold mb-2">상품 설명</h3>
             <p className="text-sm text-gray-700">

@@ -16,7 +16,7 @@ const MyPurchases = () => {
 
   // 유저의 sales 배열에 있는 상품 ID만 필터링
   const userProducts = products.filter((product) =>
-    user?.sales?.includes(product.id)
+    user?.purchases?.includes(product.id)
   );
 
   return (

@@ -73,6 +73,7 @@ const Register = () => {
       email: form.email,
       password: form.password,
       nickname: form.nickname,
+      myProducts: [],
       sales: [],
       purchases: [],
       likes: []

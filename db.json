@@ -34,11 +34,26 @@
       "sales": [],
       "purchases": [],
       "likes": []
+    },
+    {
+      "id": "f026",
+      "email": "test03@naver.com",
+      "password": "test03",
+      "nickname": "test03",
+      "myProducts": [],
+      "sales": [],
+      "purchases": [],
+      "likes": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
     }
   ],
   "products": [
     {
-      "id": 1,
+      "id": "1",
       "title": "빈티지 하와이안 셔츠",
       "description": "몇 번 안 입은 빈티지 하와이안 셔츠입니다.",
       "price": "35,000원",
@@ -46,21 +61,24 @@
       "sellerId": "f865",
       "buyerId": null,
       "likedBy": [
-        "9127"
+        "9127",
+        "f026"
       ]
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "상품제목2",
       "description": "상품설명2",
       "price": "12,000원",
       "image": "/images/products/product02.png",
       "sellerId": "9127",
       "buyerId": "f865",
-      "likedBy": []
+      "likedBy": [
+        "f026"
+      ]
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "상품제목3",
       "description": "상품설명3",
       "price": "8,000원",
@@ -69,18 +87,21 @@
       "buyerId": null,
       "likedBy": [
         "f865",
-        "9127"
+        "9127",
+        "f026"
       ]
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "상품제목4",
       "description": "상품설명4",
       "price": "5,000원",
       "image": "/images/products/product04.png",
       "sellerId": "ce2c",
       "buyerId": null,
-      "likedBy": []
+      "likedBy": [
+        "f026"
+      ]
     }
   ]
 }
