@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
   // 유저 로드 함수
   const loadUser = async (id) => {
     try {
-      const res = await fetch(`https://reactfinalexamproject01.onrender.com/${id}`);
+      const res = await fetch(`https://reactfinalexamproject01.onrender.com/users/${id}`);
       const data = await res.json();
       setUser(data);
     } catch (err) {
