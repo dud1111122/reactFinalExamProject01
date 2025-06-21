@@ -1,0 +1,133 @@
+/* ChatPage.css */
+
+.chatpage-container {
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatpage-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.chatpage-logo {
+  font-weight: bold;
+  font-size: 24px;
+  margin-right: 20px;
+}
+
+.chatpage-search-input {
+  flex-grow: 1;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.chatpage-nav {
+  margin-left: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.chatpage-nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.chatpage-main {
+  flex-grow: 1;
+  display: flex;
+}
+
+.chatpage-aside {
+  width: 300px;
+  border-right: 1px solid #ddd;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.chatpage-contact {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.chatpage-contact.selected {
+  background-color: #f0f0f0;
+}
+
+.chatpage-contact-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin-right: 10px;
+}
+
+.chatpage-section {
+  flex-grow: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chatpage-header-info {
+  margin-bottom: 20px;
+}
+
+.chatpage-header-info h3 {
+  margin: 0;
+}
+
+.chatpage-product-info {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.chatpage-product-info img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.chatpage-no-selection {
+  color: #888;
+}
+
+.chatpage-message-area {
+  flex-grow: 1;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #fafafa;
+}
+
+.chatpage-input-area {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.chatpage-input-area input[type="text"] {
+  flex-grow: 1;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.chatpage-input-area button {
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
