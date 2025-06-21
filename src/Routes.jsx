@@ -30,6 +30,7 @@ const AppRoutes = ({ products, addProduct, deleteProduct, updateProduct }) => {
           element={
             <EditProduct
               products={products}
+              addProduct={addProduct}
               updateProduct={updateProduct}
               deleteProduct={deleteProduct}
             />

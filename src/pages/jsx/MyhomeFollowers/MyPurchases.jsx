@@ -1,9 +1,11 @@
+// 구매 내역입니다.
+
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProductContext } from "@/contexts/ProductContext";
 import { UserContext } from "@/contexts/UserContext";
 
-const MyProducts = () => {
+const MyPurchases = () => {
   const navigate = useNavigate();
   const { products } = useContext(ProductContext);
   const { user } = useContext(UserContext);
@@ -14,13 +16,13 @@ const MyProducts = () => {
 
   // 유저의 sales 배열에 있는 상품 ID만 필터링
   const userProducts = products.filter((product) =>
-    user?.myProducts?.includes(product.id)
+    user?.sales?.includes(product.id)
   );
 
   return (
     <div>
       {userProducts.length === 0 ? (
-        <p className="text-gray-500">등록된 상품이 없습니다.</p>
+        <p className="text-gray-500">구매내역이 없습니다.</p>
       ) : (
         <div className="flex flex-wrap gap-4">
           {userProducts.map((product) => (
@@ -57,4 +59,4 @@ const MyProducts = () => {
   );
 };
 
-export default MyProducts;
+export default MyPurchases;

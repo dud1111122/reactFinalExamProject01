@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/common/Header";
-import { UserContext } from "@/contexts/UserContext"; // ✅ 추가
+import { UserContext } from "@/contexts/UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useContext(UserContext); // ✅ UserContext의 login 함수
+  const { login } = useContext(UserContext);
 
   const [input, setInput] = useState({
     email: "",
@@ -20,23 +20,14 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await fetch(
-        `http://localhost:4000/users?email=${input.email}&password=${input.password}`
-      );
-      const users = await res.json();
+    const success = await login(input.email, input.password); // context 함수 호출
 
-      if (users.length === 1) {
-        login(users[0]); // ✅ context로 로그인 처리
-        sessionStorage.setItem("isLoggedIn", "true");
-        alert("로그인 성공!");
-        navigate("/");
-      } else {
-        alert("아이디 또는 비밀번호가 올바르지 않습니다.");
-      }
-    } catch (err) {
-      console.error("로그인 오류:", err);
-      alert("서버 연결에 실패했습니다.");
+    if (success) {
+      sessionStorage.setItem("isLoggedIn", "true"); // 선택적 저장
+      alert("로그인 성공!");
+      navigate("/myhome"); // 원하는 경로로 이동
+    } else {
+      alert("아이디 또는 비밀번호가 올바르지 않습니다.");
     }
   };
 

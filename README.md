@@ -20,7 +20,8 @@ vscode 설정법:
 
 + npm run start
 
-+ npx json+ server + + watch db.json + + port 4000
++ npx json-server --watch db.json --port 4000
+
 
 깃 푸쉬:
 + git add .

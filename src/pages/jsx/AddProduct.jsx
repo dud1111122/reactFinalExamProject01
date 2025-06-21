@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/common/Header';
+import { ProductContext } from '@/contexts/ProductContext';
+import { UserContext } from '@/contexts/UserContext';
 
-const AddProduct = ({ addProduct }) => {
+const AddProduct = () => {
   const navigate = useNavigate();
+  const { addProduct } = useContext(ProductContext);
+  const { user, loadUser } = useContext(UserContext);
 
   const [product, setProduct] = useState({
-    name: '',
+    title: '',
     description: '',
     deadline: '',
     price: '',
-    image: '', // ✅ 이미지 경로 상태 추가
+    image: '',
     category: '',
   });
 
@@ -33,17 +37,40 @@ const AddProduct = ({ addProduct }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!product.name.trim()) {
+
+    if (!product.title.trim()) {
       alert('상품명을 입력해주세요.');
       return;
     }
 
-    addProduct({
+    const newProduct = {
       ...product,
       id: Date.now(),
-    });
+      sellerId: user?.id || '',
+      buyerId: null,
+      likedBy: [],
+    };
+
+    await addProduct(newProduct); // 상품 등록
+
+    // 🔽 유저의 myProducts 배열에 등록한 상품 ID 추가
+    if (user?.id) {
+      try {
+        const updatedMyProducts = [...(user.myProducts || []), newProduct.id];
+
+        await fetch(`http://localhost:4000/users/${user.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ myProducts: updatedMyProducts }),
+        });
+
+        await loadUser(user.id); // 최신 유저 정보 다시 불러오기
+      } catch (err) {
+        console.error("유저 myProducts 업데이트 실패", err);
+      }
+    }
 
     alert('상품이 등록되었습니다!');
     navigate('/mypage');
@@ -60,9 +87,8 @@ const AddProduct = ({ addProduct }) => {
       </div>
 
       <div className="w-full max-w-[1000px] mx-auto my-10 p-4 pt-8 mb-20 border border-gray-300 rounded-md">
-        {/* 상품 미리보기 */}
         <div className="flex flex-col mb-6 border border-b-gray-400 border-white">
-          <div className="w-[300px] h-[300px] bg-gray-300 rounded-lg overflow-hidden mb-4  shrink-0">
+          <div className="w-[300px] h-[300px] bg-gray-300 rounded-lg overflow-hidden mb-4 shrink-0">
             <img
               src={product.image || ''}
               alt="Upload"
@@ -70,7 +96,7 @@ const AddProduct = ({ addProduct }) => {
             />
           </div>
           <div>
-            <div className="font-bold text-2xl mb-1">{product.name || '예시 상품명'}</div>
+            <div className="font-bold text-2xl mb-1">{product.title || '예시 상품명'}</div>
             <div className="text-lg mb-5">{product.price ? `${product.price} 원` : '예시 가격'}</div>
           </div>
         </div>
@@ -89,13 +115,13 @@ const AddProduct = ({ addProduct }) => {
 
           {/* 상품명 */}
           <div className='flex flex-col mb-6'>
-            <label htmlFor="name" className="block text-base font-semibold mb-3">상품명</label>
+            <label htmlFor="title" className="block text-base font-semibold mb-3">상품명</label>
             <input
               type="text"
-              id="name"
-              name="name"
+              id="title"
+              name="title"
               placeholder="상품명을 입력해주세요."
-              value={product.name}
+              value={product.title}
               onChange={handleChange}
               className="w-full px-4 py-3 border border-gray-400 rounded-lg text-base shadow-inner focus:outline-none focus:ring focus:border-gray-700"
             />
@@ -111,17 +137,15 @@ const AddProduct = ({ addProduct }) => {
               onChange={handleChange}
               className="w-full px-4 py-3 border border-gray-400 rounded-lg text-base bg-white shadow-inner focus:outline-none focus:ring focus:border-gray-700"
             >
-              
-              <option value="" style={{ color: 'black' }}>카테고리를 선택해주세요.</option> {/* 회색 */}
-              <option value="상의" style={{ color: 'black' }}>상의</option>
-              <option value="하의" style={{ color: 'black' }}>하의</option>
-              <option value="아우터" style={{ color: 'black' }}>아우터</option>
-              <option value="신발" style={{ color: 'black' }}>신발</option>
-              <option value="가방" style={{ color: 'black' }}>가방</option>
-              <option value="악세서리" style={{ color: 'black' }}>악세서리</option>
+              <option value="">카테고리를 선택해주세요.</option>
+              <option value="상의">상의</option>
+              <option value="하의">하의</option>
+              <option value="아우터">아우터</option>
+              <option value="신발">신발</option>
+              <option value="가방">가방</option>
+              <option value="악세서리">악세서리</option>
             </select>
           </div>
-
 
           {/* 설명 */}
           <div className='flex flex-col mb-6'>
@@ -167,24 +191,23 @@ const AddProduct = ({ addProduct }) => {
             </div>
           </div>
 
-          {/* 하단 고정 버튼 */}
-          <div className="fixed bottom-0 left-0 right-0 w-full bg-black px-6 py-4 ">
-            <div className='w-full max-w-[1000px] mx-auto flex justify-end gap-4'> 
+          {/* 하단 버튼 */}
+          <div className="fixed bottom-0 left-0 right-0 w-full bg-black px-6 py-4">
+            <div className='w-full max-w-[1000px] mx-auto flex justify-end gap-4'>
               <button
-              type="button"
-              onClick={handleCancel}
-              className="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg text-base hover:bg-gray-400 transition"
-            >
-              취소
-            </button>
-            <button
-              type="submit"
-              className="bg-gray-400 text-white px-6 py-2 rounded-lg text-base hover:bg-gray-600 transition"
-            >
-              등록완료
-            </button>
+                type="button"
+                onClick={handleCancel}
+                className="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg text-base hover:bg-gray-400 transition"
+              >
+                취소
+              </button>
+              <button
+                type="submit"
+                className="bg-gray-400 text-white px-6 py-2 rounded-lg text-base hover:bg-gray-600 transition"
+              >
+                등록완료
+              </button>
             </div>
-            
           </div>
         </form>
       </div>
