@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
   // 유저 로드 함수
   const loadUser = async (id) => {
     try {
-      const res = await fetch(`http://localhost:4000/users/${id}`);
+      const res = await fetch(`https://reactfinalexamproject01.onrender.com/${id}`);
       const data = await res.json();
       setUser(data);
     } catch (err) {
@@ -20,7 +20,7 @@ export const UserProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const res = await fetch(
-        `http://localhost:4000/users?email=${email}&password=${password}`
+        `https://reactfinalexamproject01.onrender.com/users?email=${email}&password=${password}`
       );
       const data = await res.json();
 

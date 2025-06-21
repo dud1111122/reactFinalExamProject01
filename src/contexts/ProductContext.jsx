@@ -9,7 +9,7 @@ export const ProductProvider = ({ children }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch('http://localhost:4000/products');
+        const res = await fetch('https://reactfinalexamproject01.onrender.com/products');
         const data = await res.json();
         setProducts(data);
       } catch (err) {
@@ -21,7 +21,7 @@ export const ProductProvider = ({ children }) => {
 
   const addProduct = async (newProduct) => {
     try {
-      const res = await fetch('http://localhost:4000/products', {
+      const res = await fetch('https://reactfinalexamproject01.onrender.com/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newProduct)
@@ -35,7 +35,7 @@ export const ProductProvider = ({ children }) => {
 
   const deleteProduct = async (id) => {
     try {
-      await fetch(`http://localhost:4000/products/${id}`, {
+      await fetch(`https://reactfinalexamproject01.onrender.com/products/${id}`, {
         method: 'DELETE'
       });
       setProducts((prev) => prev.filter((p) => p.id !== id));
@@ -46,7 +46,7 @@ export const ProductProvider = ({ children }) => {
 
   const updateProduct = async (updatedProduct) => {
     try {
-      await fetch(`http://localhost:4000/products/${updatedProduct.id}`, {
+      await fetch(`https://reactfinalexamproject01.onrender.com/products/${updatedProduct.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedProduct)
