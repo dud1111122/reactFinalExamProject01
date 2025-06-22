@@ -60,7 +60,7 @@ const AddProduct = () => {
       try {
         const updatedMyProducts = [...(user.myProducts || []), newProduct.id];
 
-        await fetch(`http://localhost:4000/users/${user.id}`, {
+        await fetch(`https://reactfinalexamproject01.onrender.com/users/${user.id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ myProducts: updatedMyProducts }),

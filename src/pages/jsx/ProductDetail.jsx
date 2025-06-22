@@ -38,13 +38,13 @@ function ProductDetail() {
       : [...user.likes, product.id];
 
     try {
-      await fetch(`http://localhost:4000/products/${product.id}`, {
+      await fetch(`https://reactfinalexamproject01.onrender.com/products/${product.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ likedBy: updatedLikedBy }),
       });
 
-      await fetch(`http://localhost:4000/users/${user.id}`, {
+      await fetch(`https://reactfinalexamproject01.onrender.com/users/${user.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ likes: updatedLikes }),
