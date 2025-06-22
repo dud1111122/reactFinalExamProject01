@@ -61,7 +61,7 @@ const Register = () => {
 
   try {
     // 이메일 중복 확인
-    const res = await fetch(`http://localhost:4000/users?email=${form.email}`);
+    const res = await fetch(`https://reactfinalexamproject01.onrender.com/users?email=${form.email}`);
     const existingUsers = await res.json();
     if (existingUsers.length > 0) {
       alert("이미 존재하는 이메일입니다.");
@@ -80,7 +80,7 @@ const Register = () => {
     };
 
     // json-server에 POST 요청으로 저장
-    await fetch("http://localhost:4000/users", {
+    await fetch("https://reactfinalexamproject01.onrender.com/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
